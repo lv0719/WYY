@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue和axios开发的天气查询</title>
+    <style>
+        /* body样式 */
+        body{
+            background-image: url(../img/我的壁纸7.jpg);
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }
+        /* 外面大div样式 */
+        .warp{
+            width: 1056px;
+            height: 500px;
+            margin: 150px auto;
+            
+        }
+        /* logo样式 */
+        .search_form .logo{
+            margin-left: 52%;
+            transform: translateX(-25%);
+        }
+        .search_form .logo img{
+            width: 110px;
+            height: 110px;
+            margin-top: 10px;
+        }
+        /* 输入框和按钮样式 */
+        .search_form .form_group{
+            width: 700px;
+            height: 50px;
+            position: relative;
+        }
+        .search_form .form_group button{
+            width: 100px;
+            height: 41px;
+            font-size: 15px;
+            position: absolute;
+            right: -107px;
+        }
+        .search_form .form_group input{
+            width: 500px;
+            height: 35px;
+            letter-spacing: 1px;
+            outline: none;
+            position: absolute;
+            left: 200px;
+        }
+        /* 输入可查询城市的样式 */
+        .search_form .hotkey{
+            margin-top: 3px;
+            margin-left: 193px;
+        }
+        .search_form .hotkey a{
+            text-decoration: none;
+            color: black;
+            font-size: 13px;
+            margin-left: 6px;
+            color: #aaaaaa;
+        }
+        /* 显示天气列表的样式 */
+        .weather_list ul{
+            margin-left: 50px;
+        }
+        .weather_list li{
+            width: 200px;
+            height: 300px;
+            float: left;
+            margin-left: 10;
+            list-style: none;
+        }
+        .weather_list hr{
+            margin-left: 160px;
+            margin-top: -132px;
+            float: left;
+            height: 142px;
+            border: 1px solid #aaaaaa;
+        }
+        .weather_list .info_type{
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+        .weather_list .info_type span{
+            font-size: 42px;
+            color: darkgray;
+        }
+        .weather_list .info_temp{
+            margin-top: 18px;
+            margin-left: -19px;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+        .weather_list .info_date{
+            margin-top: 26px;
+            margin-left: 10px;
+            color: cyan;
+            letter-spacing: 2px;
+            font-weight: lighter;
+        }
+        .weather_list b{
+            color: beige;
+        }
+        .weather_list .info_temp{
+            color: beige;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!-- 引入vue的包，才能使用vue -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!-- 导入axios的包，才能使用axios -->
+    <!-- <script src="/js/h12.js"></script>  引入test12的js文件 -->
+    <div id="app" class="warp">
+        <div class="search_form">
+            <!-- 天气logo -->
+            <div class="logo"><img src="img/天气预报.png" alt=""></div> 
+            <!-- 输入搜索查询框 -->
+            <div class="form_group">
+                <input type="text" v-model="city" class="input_text" placeholder="请输入查询的天气" @keyup.enter="searchWeather">
+                <button class="input_sub" @click="searchWeather">搜  索</button>
+            </div>
+            <!-- 点击可以搜素的城市 -->
+            <div class="hotkey">
+                <a href="javascript:;" @click="changeCity('北京')">北京</a>
+                <a href="javascript:;" @click="changeCity('上海')">上海</a>
+                <a href="javascript:;" @click="changeCity('广州')">广州</a>
+                <a href="javascript:;" @click="changeCity('深圳')">深圳</a>
+            </div>
+            <ul class="weather_list">
+                <li v-for="(item,index) in weatherList">
+                    <div class="info_type"><span class="iconfont">{{ item.type}}</span></div>
+                    <div class="info_temp">
+                        <b>{{item.low}}</b>
+                        ~
+                        <b>{{item.high}}</b>
+                    </div>
+                    <div class="info_date"><span>{{item.date}}</span></div>
+                    <hr>
+                </li>   
+            </ul>
+        </div>
+    </div>
+   <script>
+       /*
+    请求地址：http://wthrcdn.etouch.cn/weather_mini
+    请求方法：get
+    请求参数：city(城市名)
+    响应内容：天气信息
+    // 功能：
+     1，点击回车
+     2，查询数据
+     3，渲染数据
+
+*/
+       var app = new Vue({
+            el: "#app",
+            data: {
+                city: "",
+                weatherList: [],
+
+            },
+            methods: {
+                searchWeather: function(){
+                    //调用接口
+                    let that = this; //保存this指向
+                    axios.get("http://wthrcdn.etouch.cn/weather_mini?city="+this.city).then(
+                        function(response){
+                            that.weatherList = response.data.data.forecast;
+                        },function(err){
+                            console.log(err);
+                        }
+                    )
+                },
+                changeCity: function(city){
+                    this.city = city; //传入city参数
+                    // let that = this; //保存this指向
+                    // axios.get("http://wthrcdn.etouch.cn/weather_mini?city="+this.city).then(
+                    //     function(response){
+                    //         that.weatherList = response.data.data.forecast;
+                    //     }).catch(
+                    //         function(err){
+                    //             console.log(err);
+                    //         }
+                    //     )
+                    this.searchWeather();
+                }
+            }
+        })
+   </script>
+</body>
+</html>

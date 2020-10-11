@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for指令</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in arr">
+                我喜欢:{{ item }}:{{index}}
+            </li>
+        </ul>
+        <h3 v-for="(it,index) in vegetables" v-bind:title="it.name">
+            {{ it.name }}:{{ index }}
+        </h3>
+        <input type="button" @click="add" value="添加">
+        <input type="button" @click="pop" value="删除">
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                arr: ["北京","上海","成都","深圳"],
+                vegetables:[
+                    {name:"西兰花炒蛋"},
+                    {name:"西红柿炒蛋"}
+                ]
+            },
+            methods: {
+                add: function() {
+                    this.vegetables.push({name:"土鸡米线"});
+                },
+                pop: function() {
+                    this.vegetables.shift();
+                }
+            }
+        })
+    </script>
+</body>
+</html>

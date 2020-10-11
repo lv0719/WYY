@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-bing</title>
+    <style>
+        .active{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+         <img :src="imgSrc" :title="imgTitle">  <!--v-bind可以省掉 -->
+         <br>
+         <img v-bind:src="imgSrc" :title="imgTitle+'111'" :class="{active:isActive}" @click="toggleActive">
+          
+          <!--  <img v-bind :class="isActive? 'active':''">  三元表达式 -->
+         <!-- <img v-bind:class="{active:isActive}">   对象表达式，和上面三元表达式一样效果 -->
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                imgSrc:"http://www.itheima.com/images/logo.png",
+                imgTitle: "黑马程序员",
+                isActive: false
+            },
+            methods: {
+                toggleActive:function(){
+                    this.isActive = !this.isActive;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

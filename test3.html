@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-if</title>
+</head>
+<body>
+    <div id="app">
+        <p v-if="isTrue">黑马程序员!</p>  <!-- v-if操作的是dom元素-->
+         <p v-show="isTrue">黑马程序员!-v-show</p> <!--v-show是操作的元素的样式 -->
+         <h3 v-if="temaperature>=35">热死了！</h3>
+         <h3 v-if="temaperature<=21">冷死了！</h3>
+        <input type="button" value="点击切换" @click="toggleIsShow">
+        <input type="button" value="点击不热" @click="toCood">
+        <input type="button" value="点击变热" @click="toHot">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                isTrue: false,
+                temaperature: 40
+            },
+            methods: {
+                toggleIsShow: function(){
+                    this.isTrue = !this.isTrue;
+                },
+                toCood:function(){
+                    this.temaperature = 20;
+                },
+                toHot:function(){
+                    this.temaperature = 40;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue实现点击切换图片</title>
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        #mask{
+            width: 800px;
+            height: 600px;
+            background-color: rgb(158, 141, 141);
+            margin: 0 auto;
+        }
+        #body{
+            position: relative;
+        }
+        #body img{
+            width: 600px;
+            height: 400px;
+        }
+        .left ,.right{
+            width: 94px;
+            height: 120px;
+            position: absolute;
+            top: 245px;
+            background: #294357;
+        }
+        .middle{
+            position: absolute;
+            left: 100px;
+            top: 100px;
+        }
+        .right{
+            right: 0;
+        }
+        .left{
+            left: 0;
+            z-index: 5;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="mask">
+        <div id="body">
+            <div class="left" v-show="index!==0">
+                <a href="javascript:void(0)"  @click="prev"><img src="./img/左箭头.png" style="width: 100%;height: 100%;"></a>
+            </div>
+            <div class="middle">
+                <img :src="imgSrc[index]">
+            </div>
+            <div class="right" v-show="index!==imgSrc.length-1">
+                <a href="javascript:void(0)" @click="next"><img src="./img/右箭头.png" style="width: 100%;height: 100%;"></a>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#mask',
+            data:{
+                imgSrc: [
+                    "./img/我的座驾.jpg",
+                    "./img/我的壁纸7.jpg",
+                    "./img/我的壁纸6.jpg",
+                    "./img/我的壁纸5.jpg",
+                    "./img/我的壁纸4.jpg"
+                ],
+                index: 0,
+            },
+            methods: {
+                prev:function(){
+                    if(this.index>0){
+                        this.index--;
+                        console.log(this.index);
+                    }else{
+                        return;
+                    }  
+                },
+                next:function(){     
+                    if(this.index<4){
+                        this.index++;
+                        console.log(this.index);
+                    }else{
+                        return;
+                    }
+                        
+                }
+            }
+        })
+    </script>
+</body>
+</html>
