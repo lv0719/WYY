@@ -1,202 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>网抑云</title>
-    <link rel="stylesheet" href="css/test13.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/test13.css" />
+  </head>
+  <body>
     <div id="music">
-        <!-- 播放器主题区域 -->
-        <div class="play_music" id="player">
-            <div class="search_bar">
-                <img src="imgs/网易云.png" alt="" class="wMusic">
-                <p class="p1">网抑云</p>
-                <p class="p2">兄弟们到点了，打开网抑云给我哭! 呜呜呜~~~</p>
-                
-                <!-- 搜索歌曲 -->
-                <input type="text" autocomplete="on" v-model="query" placeholder="听你想听" @keyup.enter="searchMusic">
-                <img src="imgs/搜索--1.png" @click="searchMusic" class="wSearch">
-            </div>
-            <div class="center_con">
-                <!-- 搜素歌曲列表 -->
-                <div class="song_wapper">
-                    <div class="allSongs"><p>搜索结果</p></div>
-                    <div class="scroll scrolls">
-                        <ul class="song_list">
-                            <li v-for="item in musicList">
-                                <a href="javascript:;" @click="playMusic(item.id)">
-                                    <img src="https://i.loli.net/2020/03/23/chJ89uNpofneFrS.png" class="img1">
-                                </a>
-                                <b>{{ item.name }}</b>
-                                <span v-if="item.mvid!=0" @click="playMv(item.mvid)">
-                                    <i>
-                                     <img src="imgs/视频 播放 影片.png" class="img2">
-                                    </i>
-                                </span>
-                                 
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- 歌曲信息容器 -->
-                <div class="player_con" :class="{playing:isplay}">
-                    <img src="https://i.loli.net/2020/03/23/dor23bhZtIvK17X.png" class="left_line">
-                    <img src="https://i.loli.net/2020/03/23/dor23bhZtIvK17X.png" class="right_line">
-                    <img src="https://i.loli.net/2020/03/23/gZHko2WlpJNcGPv.png" class="play_bar">
-                    <!-- 黑胶唱片 -->
-                    <img src="https://i.loli.net/2020/03/23/hQPuH4gNRx7XayI.png" class="disc autoRotate">
-                    <img :src="picUrl" class="cover autoRotate">
-                    <p>歌曲所属专辑：{{musicZJ}} <br><br>
-                        当前播放：{{musicName}} <br><br>
-                         歌手：{{songername}}
-                    </p>
-                </div>
-                <!-- 评论模块 -->
-                <div class="comment_wrapper" ref='comment_wrapper'>
-                    <h5 class='title'>热门留言</h5>
-                    <div class="comment_list">
-                        <dl v-for="item in comment">
-                            <dt><img :src="item.user.avatarUrl" alt=""></dt>
-                            <dd class="name">{{item.user.nickname}}</dd>
-                            <dd class="detail">{{item.content}}</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            <div class="audio_con">
-                <audio :src="musicUrl" @play="play" @pause="pause" controls="controls" autoplay="autoplay" loop="loop" class="myaudio"></audio>
-            </div>
-            <div class="video_con" style="display: none;" v-show="isShow">
-                <video ref="video" :src="mvUrl" class="video_con" controls="controls"></video> 
-                <div class="mask" @click="hideMv"></div>
-            </div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!-- 引入vue的包，才能使用vue -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!-- 导入axios的包，才能使用axios -->
-    <script>
-        
+      <!-- 播放器主题区域 -->
+      <div class="play_music" id="player">
+        <div class="search_bar">
+          <img src="imgs/网易云.png" alt="" class="wMusic" />
+          <p class="p1">网抑云666</p>
+          <p class="p2">兄弟们到点了，打开网抑云给我哭! 呜呜呜~~~</p>
 
-    var app = new Vue({
-        el: '#player',
+          <!-- 搜索歌曲 -->
+          <input
+            type="text"
+            autocomplete="on"
+            v-model="query"
+            placeholder="听你想听"
+            @keyup.enter="searchMusic"
+          />
+          <img src="imgs/搜索--1.png" @click="searchMusic" class="wSearch" />
+        </div>
+        <div class="center_con">
+          <!-- 搜素歌曲列表 -->
+          <div class="song_wapper">
+            <div class="allSongs"><p>搜索结果</p></div>
+            <div class="scroll scrolls">
+              <ul class="song_list">
+                <li v-for="item in musicList">
+                  <a href="javascript:;" @click="playMusic(item.id)">
+                    <img
+                      src="https://i.loli.net/2020/03/23/chJ89uNpofneFrS.png"
+                      class="img1"
+                    />
+                  </a>
+                  <b>{{ item.name }}</b>
+                  <span v-if="item.mvid!=0" @click="playMv(item.mvid)">
+                    <i>
+                      <img src="imgs/视频 播放 影片.png" class="img2" />
+                    </i>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- 歌曲信息容器 -->
+          <div class="player_con" :class="{playing:isplay}">
+            <img
+              src="https://i.loli.net/2020/03/23/dor23bhZtIvK17X.png"
+              class="left_line"
+            />
+            <img
+              src="https://i.loli.net/2020/03/23/dor23bhZtIvK17X.png"
+              class="right_line"
+            />
+            <img
+              src="https://i.loli.net/2020/03/23/gZHko2WlpJNcGPv.png"
+              class="play_bar"
+            />
+            <!-- 黑胶唱片 -->
+            <img
+              src="https://i.loli.net/2020/03/23/hQPuH4gNRx7XayI.png"
+              class="disc autoRotate"
+            />
+            <img :src="picUrl" class="cover autoRotate" />
+            <p>
+              歌曲所属专辑：{{musicZJ}} <br /><br />
+              当前播放：{{musicName}} <br /><br />
+              歌手：{{songername}}
+            </p>
+          </div>
+          <!-- 评论模块 -->
+          <div class="comment_wrapper" ref="comment_wrapper">
+            <h5 class="title">热门留言</h5>
+            <div class="comment_list">
+              <dl v-for="item in comment">
+                <dt><img :src="item.user.avatarUrl" alt="" /></dt>
+                <dd class="name">{{item.user.nickname}}</dd>
+                <dd class="detail">{{item.content}}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div class="audio_con">
+          <audio
+            :src="musicUrl"
+            @play="play"
+            @pause="pause"
+            controls="controls"
+            autoplay="autoplay"
+            loop="loop"
+            class="myaudio"
+          ></audio>
+        </div>
+        <div class="video_con" style="display: none" v-show="isShow">
+          <video
+            ref="video"
+            :src="mvUrl"
+            class="video_con"
+            controls="controls"
+          ></video>
+          <div class="mask" @click="hideMv"></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 引入vue的包，才能使用vue -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 导入axios的包，才能使用axios -->
+    <script>
+      var app = new Vue({
+        el: "#player",
         data: {
-            query: "", //查询关键字
-            musicList: [], //歌曲数组
-            musicName: "暂无歌曲播放", //歌曲名字
-            songername: "暂无歌手名字", //歌手名字
-            musicZJ: "暂无所属专辑", //歌曲所属专辑
-            musicUrl: "", //歌曲地址
-            picUrl: "imgs/IMG_0256.JPG", //歌曲封面
-            comment: [], //歌曲评论
-            isplay: false, //动画播放状态
-            isShow: false, //遮罩层的显示状态
-            mvUrl: "" //mv地址
+          query: "", //查询关键字
+          musicList: [], //歌曲数组
+          musicName: "暂无歌曲播放", //歌曲名字
+          songername: "暂无歌手名字", //歌手名字
+          musicZJ: "暂无所属专辑", //歌曲所属专辑
+          musicUrl: "", //歌曲地址
+          picUrl: "imgs/IMG_0256.JPG", //歌曲封面
+          comment: [], //歌曲评论
+          isplay: false, //动画播放状态
+          isShow: false, //遮罩层的显示状态
+          mvUrl: "", //mv地址
         },
         methods: {
-            //歌曲搜索接口
-            //请求地址：https://autumnfish.cn/search
-            //请求方法：get
-            //请求参数：keywords(查询的关键字)
-            //响应内容：歌曲搜索结果
+          //歌曲搜索接口
+          //请求地址：https://autumnfish.cn/search
+          //请求方法：get
+          //请求参数：keywords(查询的关键字)
+          //响应内容：歌曲搜索结果
 
-            //歌曲url获取地址
-            //请求地址：https://autumnfish.cn/song/url
-            //请求方法：get
-            //请求参数：id(歌曲id)
-            //响应内容：歌曲的url地址
+          //歌曲url获取地址
+          //请求地址：https://autumnfish.cn/song/url
+          //请求方法：get
+          //请求参数：id(歌曲id)
+          //响应内容：歌曲的url地址
 
-            //歌曲详情获取
-            //请求地址：https://autumnfish.cn/song/detail
-            //请求方法：get
-            //请求参数：ids(歌曲id)
-            //响应内容：歌曲详情，包含封面信息
+          //歌曲详情获取
+          //请求地址：https://autumnfish.cn/song/detail
+          //请求方法：get
+          //请求参数：ids(歌曲id)
+          //响应内容：歌曲详情，包含封面信息
 
-            //热门评论获取
-            //请求地址：https://autumnfish.cn/comment/hot?type=0
-            //请求方法：get
-            //请求参数：id(歌曲id,type固定为0)
-            //响应内容：歌曲热门评论
+          //热门评论获取
+          //请求地址：https://autumnfish.cn/comment/hot?type=0
+          //请求方法：get
+          //请求参数：id(歌曲id,type固定为0)
+          //响应内容：歌曲热门评论
 
-            //mv地址获取
-            //请求地址：https://autumnfish.cn/mv/url
-            //请求方法：get
-            //请求参数：id(mvid,为0说明没有mv)
-            //响应内容：mv地址
-            searchMusic: function(){ //歌曲搜索
-                let that = this;
-                axios.get("https://autumnfish.cn/search?keywords="+this.query)
-                .then(function(response){
-                    //console.log(response);
-                    //console.log(response.data.result.songs)
-                    that.musicList = response.data.result.songs;
-                    //console.log(response.data.result.songs);
-                   // console.log(response.data.result.songs[0].name);
-                },function(err){
-                    console.log(err);
-                })
-            },
-            
-            playMusic: function(musicId){//歌曲播放
-                
-                //console.log(this.isplay);
-                let that = this;
-                axios.get("https://autumnfish.cn/song/url?id="+musicId)
-                .then(function(response){
-                    //console.log(response);
-                    that.musicUrl = response.data.data[0].url;
-                    //console.log(response.data.data[0].url);              
-                },function(err){
-                    console.log(err);
-                })
+          //mv地址获取
+          //请求地址：https://autumnfish.cn/mv/url
+          //请求方法：get
+          //请求参数：id(mvid,为0说明没有mv)
+          //响应内容：mv地址
+          searchMusic: function () {
+            //歌曲搜索
+            let that = this;
+            axios
+              .get("https://autumnfish.cn/search?keywords=" + this.query)
+              .then(
+                function (response) {
+                  //console.log(response);
+                  //console.log(response.data.result.songs)
+                  that.musicList = response.data.result.songs;
+                  //console.log(response.data.result.songs);
+                  // console.log(response.data.result.songs[0].name);
+                },
+                function (err) {
+                  console.log(err);
+                }
+              );
+          },
 
-                axios.get("https://autumnfish.cn/song/detail?ids="+musicId)
-                .then(function(response){
-                    //console.log(response.data.songs[0].al.picUrl);
-                    that.picUrl = response.data.songs[0].al.picUrl;
-                    that.musicZJ = response.data.songs[0].al.name;
-                    that.musicName = response.data.songs[0].name;
-                    that.songername = response.data.songs[0].ar[0].name;
-                    //console.log(response.data.songs[0]);
-                },function(err){
-                    console.log(err);
-                })
+          playMusic: function (musicId) {
+            //歌曲播放
 
-                axios.get("https://autumnfish.cn/comment/hot?type=0&id="+musicId)
-                .then(function(response){
-                    that.comment = response.data.hotComments;
-                    //console.log(response.data.hotComments);
-                },function(err){
-                    console.log();
-                })
-            },
-            play: function(){ //歌曲播放
-                //console.log("play");
-                this.isplay = true;
-            },
-            pause: function(){ //歌曲暂停
-                //console.log("pause");
-                this.isplay = false;
-            },
-            playMv: function(mvid){ //播放mv
-                let that = this;
-                axios.get("https://autumnfish.cn/mv/url?id="+mvid)
-                .then(function(response){
-                    //console.log(response.data.data.url);
-                    that.isShow = true;
-                    that.mvUrl = response.data.data.url;
-                },function(err){
-                    console.log(err);
-                })
-            },
-            hideMv: function(){
-                this.isShow = false;
-            }
+            //console.log(this.isplay);
+            let that = this;
+            axios.get("https://autumnfish.cn/song/url?id=" + musicId).then(
+              function (response) {
+                //console.log(response);
+                that.musicUrl = response.data.data[0].url;
+                //console.log(response.data.data[0].url);
+              },
+              function (err) {
+                console.log(err);
+              }
+            );
 
-          
-        }
-    })
+            axios.get("https://autumnfish.cn/song/detail?ids=" + musicId).then(
+              function (response) {
+                //console.log(response.data.songs[0].al.picUrl);
+                that.picUrl = response.data.songs[0].al.picUrl;
+                that.musicZJ = response.data.songs[0].al.name;
+                that.musicName = response.data.songs[0].name;
+                that.songername = response.data.songs[0].ar[0].name;
+                //console.log(response.data.songs[0]);
+              },
+              function (err) {
+                console.log(err);
+              }
+            );
+
+            axios
+              .get("https://autumnfish.cn/comment/hot?type=0&id=" + musicId)
+              .then(
+                function (response) {
+                  that.comment = response.data.hotComments;
+                  //console.log(response.data.hotComments);
+                },
+                function (err) {
+                  console.log();
+                }
+              );
+          },
+          play: function () {
+            //歌曲播放
+            //console.log("play");
+            this.isplay = true;
+          },
+          pause: function () {
+            //歌曲暂停
+            //console.log("pause");
+            this.isplay = false;
+          },
+          playMv: function (mvid) {
+            //播放mv
+            let that = this;
+            axios.get("https://autumnfish.cn/mv/url?id=" + mvid).then(
+              function (response) {
+                //console.log(response.data.data.url);
+                that.isShow = true;
+                that.mvUrl = response.data.data.url;
+              },
+              function (err) {
+                console.log(err);
+              }
+            );
+          },
+          hideMv: function () {
+            this.isShow = false;
+          },
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
